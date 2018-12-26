@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="top.lijunliang.permission.dao.PermissionDao">
+
+    <insert id="add" parameterType="sysPermission">
+        INSERT INTO permission (name, permission) VALUES (#{name}, #{permission});
+    </insert>
+
+    <delete id="delete" parameterType="sysPermission">
+        DELETE FROM permission WHERE id = #{id};
+    </delete>
+
+    <update id="update" parameterType="sysPermission">
+        UPDATE permission SET name = #{name}, permission = #{permission} WHERE id = #{id};
+    </update>
+
+    <select id="selectAll" resultType="sysPermission">
+        SELECT * FROM permission;
+    </select>
+
+    <select id="findByArticleId" parameterType="sysPermission" resultType="sysPermission">
+        SELECT * FROM permission WHERE id = #{id};
+    </select>
+
+</mapper>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+        <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
+        <!-- Bootstrap css -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- kendo ui css -->
+        <link href="css/kendo.common.min.css" rel="stylesheet">
+        <link href="css/kendo.default.min.css" rel="stylesheet">
+        <!-- font-awesome -->
+        <link href="css/font-awesome.css" rel="stylesheet">
+        <!--蓝鲸提供的公用样式库 -->
+        <link href="css/select2.css" rel="stylesheet">
+        <link href="css/bk.css" rel="stylesheet">
+        <link href="css/bk_pack.css" rel="stylesheet">
+        <link href="css/ui-dialog.css" rel="stylesheet">
+        <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+        <script src="js/jquery-1.10.2.min.js"></script>
+        <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- 包括所有kendoui的js插件或者可以根据需要使用的js插件调用　-->
+        <script src="js/kendo.all.min.js"></script>
+        <script src="js/echarts-all.js"></script>
+        <script src="js/select2.js"></script>
+        <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/artDialog-6.0.4/dist/dialog-min.js"
+        <!-- 数据埋点统计 -->
+        <script src="http://magicbox.bk.tencent.com/static_api/analysis.js"></script>
+        <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+        <!--[if lt IE 9]><script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/html5shiv.min.js"></script><script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/respond.min.js"></script><![endif]-->
+    </head>
+    <body class="bg-white" data-bg-color="bg-white">
+    <!-- 顶部 -->
+    <div class="navbar king-horizontal-nav1" id="nav1_demo1" style="min-width:768px;position: fixed">
+        <div class="navbar-container">
+            <div class="navbar-header pull-left">
+                <a class="navbar-brand" href="#">赏云后台管理</a>
+            </div>
+            <div id="user-name-label" class="navbar-header pull-right">
+                <ul class="nav">
+                    <li class="user-info">
+                        <button v-on:click="login" style="background-color:transparent;border:0;color:#FFF;">
+                            <img class="img-rounded" src="./img/flydog.png">
+                            <span>{{username}}</span>
+                        </button>
+                        <button v-on:click="logout" style="margin-right:10px;background-color:transparent;border:0;color:#FFF;">退出</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" class="king-page-box king-layout1-main clearfix" style="background-color: rgb(245,245,245)">
+        <!-- 左边 start -->
+        <div class="king-layout1-sidebar column" style="width:216px;margin-top: 42px">
+            <nav style="overflow:hidden;">
+                <div class="king-vertical-nav9 f14 king-full-height">
+                    <div class="navbar-collapse navbar-hov">
+                        <ul class="nav navbar-nav side-nav">
+                            <li>
+                                <router-link to="/"><i class="fa fa-home "></i>
+                                    <span>首页</span></router-link>
+                                <ul class="collapse"> </ul>
+                            </li>
+                            <li class="">
+                                <router-link to="/article"><i class="fa fa-navicon"></i>
+                                    <span>订单管理</span></router-link>
+                                <ul class="collapse" style="display: none;"> </ul>
+                            </li>
+                            <li>
+                                <router-link to="/article"><i class="fa fa-square"></i>
+                                    <span>产品管理</span></router-link>
+                                <ul class="collapse"></ul>
+                            </li>
+                            <li>
+                                <router-link to="/article"><i class="fa fa-user"></i>
+                                    <span>用户管理</span></router-link>
+                                <ul class="collapse"> </ul>
+                            </li>
+                            <li>
+                                <router-link to="/article"><i class="fa fa-newspaper-o"></i>
+                                    <span>内容管理</span></router-link>
+                                <ul class="collapse"> </ul>
+                            </li>
+                            <li>
+                                <router-link to="/article"> <i class="fa fa-institution "></i>
+                                    <span>商户管理</span></router-link>
+                                <ul class="collapse"> </ul>
+                            </li>
+                            <li>
+                                <router-link to="/article"><i class="fa fa-cubes"></i>
+                                    <span>营销管理</span></router-link>
+                                <ul class="collapse"> </ul>
+                            </li>
+                            <li>
+                                <router-link to="/article"><i class="fa fa-user-plus"></i>
+                                    <span>代理管理</span></router-link>
+                                <ul class="collapse"> </ul>
+                            </li>
+                            <li>
+                                <router-link to="/article"><i class="fa fa-group"></i>
+                                    <span>权限管理</span></router-link>
+                                <ul class="collapse" style="display: none;">
+                                    <li><router-link to="/admin">管理员</router-link></li>
+                                    <li><router-link to="/role">角色</router-link></li>
+                                    <li><router-link to="menu">菜单</router-link></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);"><i class="fa fa-cogs"></i>
+                                    <span>系统设置</span></a>
+                                <ul class="collapse"> </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- 左边 end -->
+
+        <!-- content start -->
+        <div class="king-content-wrap">
+            <div class="king-layout1-content" style="margin-left: 216px;">
+                <!-- 路由外链 -->
+                <router-view></router-view>
+            </div>
+        </div>
+        <!-- content end -->
+
+    </div>
+
+    <!-- templates -->
+    <script id="article_template" type="text/template">
+        <!-- 文章列表 -->
+        <div class="panel panel-primary" style="border: none;">
+            <div class="panel-body">文章列表</div>
+            <div class="panel-footer">
+                <div class="panel panel-default table7_demo king-table7-demo3">
+                    <div class="panel-body">
+                        <div id="add_article" class="king-wrapper clearfix">
+                            <form class="form-inline king-search-form king-no-bg pull-left">
+                                <div class="form-group">
+                                    <div class="input-group king-input-group">
+                                        <input type="text" class="form-control pl30 king-form-control" placeholder="请输入关键字">
+                                        <span class="glyphicon glyphicon-search form-control-feedback king-form-control-feedback"></span>
+                                    </div>
+                                </div>
+                            </form>
+                            <button v-on:click="addApticle" class="king-btn king-btn-new pull-right">添加文章</button>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="table table-hover mb0">
+                            <thead>
+                            <tr class="active">
+                                <th style="width:100px">ID</th>
+                                <th style="min-width:150px">文章标题</th>
+                                <th style="width:250px">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="display: table-row; opacity: 1;" v-for="(article,index) in articles">
+                                <td>{{index + 1}}</td>
+                                <td>{{article.title}}</td>
+                                <td>
+                                    <button onclick="alert('未完善')" class="king-btn king-default">预览</button>
+                                    <button onclick="alert('未完善')" class="king-btn king-default">编辑</button>
+                                    <button v-on:click="deleteArticle(article.id)" class="king-btn king-danger">删除</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="pull-right king-page-box">
+                                        <p class="pull-left mt15 mr15">
+                                            共<span>25</span>条记录，当前第<span>1</span>/<span id="total_page">5</span>页
+                                        </p>
+                                        <ul class="pagination pagination-sm pull-left mt10">
+                                            <li class="disabled">
+                                                <a href="javascript:;" aria-label="Previous">
+                                                    <span aria-hidden="true">«</span>
+                                                </a>
+                                            </li>
+                                            <li class="active"><a href="javascript:;">1</a></li>
+                                            <li><a href="javascript:alert('未完善');">2</a></li>
+                                            <li><a href="javascript:alert('未完善');">3</a></li>
+                                            <li><a href="javascript:alert('未完善');">4</a></li>
+                                            <li><a href="javascript:alert('未完善');">5</a></li>
+                                            <li>
+                                                <a href="javascript:;" aria-label="Next">
+                                                    <span aria-hidden="true">»</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 管理员模板 -->
+    <script id="admin_template" type="text/template">
+        <div class="panel panel-primary" style="border: none;" v-if="admins[0]">
+            <div class="panel-body">管理员列表</div>
+            <div class="panel-footer">
+                <div class="panel panel-default table7_demo king-table7-demo3">
+                    <div class="panel-body">
+                        <div class="king-wrapper clearfix">
+                            <form class="form-inline king-search-form king-no-bg pull-left">
+
+                                <div class="form-group">
+                                    <div class="input-group king-input-group">
+                                        <input type="text" class="form-control pl30 king-form-control" placeholder="请输入关键字">
+                                        <span class="glyphicon glyphicon-search form-control-feedback king-form-control-feedback"></span>
+                                    </div>
+                                </div>
+                            </form>
+                            <a v-on:click="addAdmin" class="king-btn king-btn-new pull-right">添加管理员</a>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="table table-hover mb0">
+                            <thead>
+                            <tr class="active">
+                                <th style="width:80px">ID</th>
+                                <th style="min-width:150px">Name</th>
+                                <th style="width:450px">角色</th>
+                                <th style="width:200px">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(admin, index) in admins" style="display: table-row; opacity: 1;">
+                                    <td>{{index + 1}}</td>
+                                    <td>{{admin.name}}</td>
+                                    <td><a v-for="role in admin.roleList" class="king-btn-demo king-btn king-border king-round king-default" style="margin: 3px">{{role.name}}</a></td>
+                                    <td>
+                                        <button v-on:click="updateAdmin(admin.id)" class="king-btn king-default">修改</button>
+                                        <button v-on:click="deleteAdmin(admin.id)" class="king-btn king-danger">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 角色模板 -->
+    <script id="role_template" type="text/template">
+        <div class="panel panel-primary" style="border: none;" v-if="roles[0] != null">
+            <div class="panel-body">角色管理</div>
+            <div class="panel-footer">
+                <div class="panel panel-default table7_demo king-table7-demo3">
+                    <div class="panel-body">
+                        <div class="king-wrapper clearfix">
+                            <form class="form-inline king-search-form king-no-bg pull-left">
+                                <div class="form-group">
+                                    <div class="input-group king-input-group">
+                                        <input type="text" class="form-control pl30 king-form-control" placeholder="请输入关键字">
+                                        <span class="glyphicon glyphicon-search form-control-feedback king-form-control-feedback"></span>
+                                    </div>
+                                </div>
+                            </form>
+                            <button v-on:click="addRole" class="king-btn king-btn-new pull-right">添加角色</button>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="table table-hover mb0">
+                            <thead>
+                            <tr class="active">
+                                <th style="width:80px">ID</th>
+                                <th style="min-width:150px">Name</th>
+                                <th style="min-width:450px">权限</th>
+                                <th style="width:200px">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(role, index) in roles" style="display: table-row; opacity: 1;">
+                                    <td>{{index + 1}}</td>
+                                    <td>{{role.name}}</td>
+                                    <td><a v-for="p in role.permissionList" class="king-btn-demo king-btn king-border king-round king-default" style="margin: 3px">{{p.name}}</a></td>
+                                    <td>
+                                        <button v-on:click="updateRole(role.id)" class="king-btn king-default">修改</button>
+                                        <button v-on:click="deleteRole(role.id)" class="king-btn king-danger">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="menu_template" type="text/template">
+        <div class="panel panel-primary" style="border: none;">
+            <div class="panel-body">菜单管理</div>
+            <div class="panel-footer">
+                <table class="table table-bordered table7_demo">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>ID</th>
+                        <th>系统</th>
+                        <th>名称</th>
+                        <th>权限</th>
+                        <th>地址</th>
+                        <th>类型</th>
+                        <th>排序</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(menu,index) in menus">
+                        <td>{{index + 1}}</td>
+                        <td>{{menu.id}}</td>
+                        <td>ADMIN</td>
+                        <td>{{menu.name}}</td>
+                        <td>{{menu.permission}}</td>
+                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>{{menu.time}}</td>
+                        <td>
+                            <button onclick="alert('未完善')" class="btn btn-xs btn-warning" title="编辑">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </button>
+                            <button class="btn btn-xs btn-danger" v-on:click="deleteMenu(menu.id)" title="删除">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
+
+    <!-- 添加文章弹层 -->
+    <script id="add_article_template" type="text/template">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="inputCount3" class="col-sm-3 control-label">标题：</label>
+                    <div class="col-sm-9">
+                        <input id="article_title" type="text" class="form-control" id="inputCount3" placeholder="文章标题">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 添加管理员弹层 -->
+    <script id="add_admin_template" type="text/template">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="inputCount3" class="col-sm-3 control-label" style="margin-top: 10px;">名字：</label>
+                    <div class="col-sm-9">
+                        <input id="adminName" type="text" class="form-control" placeholder="请输入名字"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputCount3" class="col-sm-3 control-label" style="margin-top: 20px;">密码：</label>
+                    <div class="col-sm-9">
+                        <input id="adminpassword" type="password" class="form-control" style="margin-top: 10px" placeholder="请输入密码"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" style="margin-top: 30px;">角色：</label>
+                    <div class="col-sm-9">
+                        <div id="role_list" class="checkbox"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 更新管理员弹层 -->
+    <script id="update_admin_template" type="text/template">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="inputCount3" class="col-sm-3 control-label" style="margin-top: 10px;">名字：</label>
+                    <div class="col-sm-9">
+                        <input id="update_adminName" type="text" class="form-control" placeholder="请输入名字"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" style="margin-top: 30px;">角色：</label>
+                    <div class="col-sm-9">
+                        <div id="update_role_list" class="checkbox"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 添加角色弹层 -->
+    <script id="add_role_template" type="text/template">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="inputCount3" class="col-sm-3 control-label" style="margin-top: 10px;">名字：</label>
+                    <div class="col-sm-9">
+                        <input id="roleName" type="text" class="form-control" placeholder="角色名字"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" style="margin-top: 30px;">权限：</label>
+                    <div class="col-sm-9">
+                        <div id="permission_list" class="checkbox"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- 登录弹层 -->
+    <script id="login_template" type="text/template">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="inputCount3" class="col-sm-2 control-label" style="margin-top:10px;padding:0">姓名:</label>
+                    <div class="col-sm-10">
+                        <input id="username" type="text" class="form-control" placeholder="请输入用户名" value="wizard"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputCount3" class="col-sm-2 control-label" style="margin-top:10px;padding:0">密码:</label>
+                    <div class="col-sm-10">
+                        <input id="password" type="password" class="form-control" placeholder="请输入密码" value="root"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- vue -->
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="js/vue-cookies.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+</html>

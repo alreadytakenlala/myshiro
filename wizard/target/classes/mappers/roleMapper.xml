@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="top.lijunliang.permission.dao.RoleDao">
+
+    <resultMap id="roleMap" type="top.lijunliang.permission.entity.SysRole">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <collection property="permissionList" ofType="top.lijunliang.permission.entity.SysPermission">
+            <id property="id" column="p_id"/>
+            <result property="name" column="p_name"/>
+            <result property="permission" column="p_permission"/>
+        </collection>
+    </resultMap>
+
+    <insert id="addR" parameterType="sysRole" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO role (name) VALUES (#{name});
+    </insert>
+
+    <insert id="addRP" parameterType="Map">
+        INSERT INTO role_permission VALUES (#{rid}, #{pid});
+    </insert>
+
+    <delete id="delete" parameterType="sysRole">
+        DELETE FROM role WHERE id = #{id};
+    </delete>
+
+    <delete id="deleteRP" parameterType="sysRole">
+        DELETE FROM role_permission WHERE rid = #{id};
+    </delete>
+
+    <update id="updateR" parameterType="sysRole">
+        UPDATE role SET name = #{name} WHERE id = #{id};
+    </update>
+
+    <select id="listRoleIN" resultType="sysRole">
+        SELECT * FROM role;
+    </select>
+
+    <select id="selectAll" resultMap="roleMap">
+        SELECT r.*, p.id as p_id, p.name as p_name, p.permission as p_permission
+        FROM role r
+        INNER JOIN role_permission rp ON rp.rid = r.id
+        INNER JOIN permission p ON p.id = rp.pid
+    </select>
+
+    <select id="findByRoleId" parameterType="sysRole" resultMap="roleMap">
+        SELECT r.*, p.id as p_id, p.name as p_name, p.permission as p_permission
+        FROM role r
+             INNER JOIN role_permission rp ON rp.rid = r.id
+             INNER JOIN permission p ON p.id = rp.pid
+        WHERE r.id = #{id}
+    </select>
+
+    <select id="findByRoleName" parameterType="sysRole" resultMap="roleMap">
+        SELECT r.*, p.id as p_id, p.name as p_name, p.permission as p_permission
+        FROM role r
+        INNER JOIN role_permission rp ON rp.rid = r.id
+        INNER JOIN permission p ON p.id = rp.pid
+        WHERE r.name = #{name}
+    </select>
+
+</mapper>

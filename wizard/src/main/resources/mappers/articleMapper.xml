@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="top.lijunliang.permission.dao.ArticleDao">
+
+    <insert id="add" parameterType="article">
+        INSERT INTO article (title, content) VALUES (#{title}, #{content});
+    </insert>
+
+    <delete id="delete" parameterType="article">
+        DELETE FROM article WHERE id = #{id};
+    </delete>
+
+    <update id="update" parameterType="article">
+        UPDATE article
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="title != null">
+                    and title = #{title}
+                </if>
+                <if test="content != null">
+                    content = #{content}
+                </if>
+            </trim>
+            WHERE id = #{id};
+    </update>
+
+    <select id="selectAll" parameterType="article" resultType="article">
+        SELECT * FROM article;
+    </select>
+
+    <select id="findByArticleId" parameterType="article" resultType="article">
+        SELECT * FROM article WHERE id = #{id};
+    </select>
+    
+</mapper>

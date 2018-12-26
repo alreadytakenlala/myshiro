@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="top.lijunliang.permission.dao.UserInfoDao">
+
+    <resultMap id="userMap" type="top.lijunliang.permission.entity.UserInfo">
+        <id property="id" column="u_id"/>
+        <result property="name" column="u_name"/>
+        <result property="password" column="u_password"/>
+        <result property="salt" column="u_salt"/>
+        <collection property="roleList" ofType="top.lijunliang.permission.entity.SysRole">
+            <id property="id" column="r_id"/>
+            <result property="name" column="r_name"/>
+            <collection property="permissionList" ofType="top.lijunliang.permission.entity.SysPermission">
+                <id property="id" column="p_id"/>
+                <result property="name" column="p_name"/>
+                <result property="permission" column="p_permission"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <insert id="addU" parameterType="userInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (name, password, salt) VALUES (#{name}, #{password}, #{salt});
+    </insert>
+
+    <insert id="addUR" parameterType="Map">
+        INSERT INTO user_role VALUES (#{uid}, #{rid});
+    </insert>
+
+    <select id="selectAll" resultMap="userMap">
+        SELECT u.id as u_id, u.name as u_name, u.password as u_password, u.salt as u_salt, r.id as r_id, r.name as r_name
+        FROM user u
+            INNER JOIN user_role ur ON ur.uid = u.id
+            INNER JOIN role r ON r.id = ur.rid
+    </select>
+
+    <select id="findByUserName" parameterType="userInfo" resultMap="userMap">
+        SELECT u.id as u_id, u.name as u_name, u.password as u_password, u.salt as u_salt, r.id as r_id, r.name as r_name, p.id as p_id, p.name as p_name, p.permission as p_permission
+        FROM user u
+            INNER JOIN user_role ur ON ur.uid = u.id
+            INNER JOIN role r ON r.id = ur.rid
+            INNER JOIN role_permission rp ON rp.rid = r.id
+            INNER JOIN permission p ON p.id = rp.pid
+        WHERE u.name = #{name}
+    </select>
+
+    <select id="deleteUser" parameterType="userInfo">
+        DELETE FROM user WHERE id = #{id}
+    </select>
+
+    <update id="updateUserName" parameterType="userInfo">
+        UPDATE user SET name = #{name} WHERE id = #{id}
+    </update>
+
+    <select id="findByUserId" parameterType="userInfo" resultMap="userMap">
+        SELECT u.id as u_id, u.name as u_name, u.password as u_password, u.salt as u_salt, r.id as r_id, r.name as r_name
+        FROM user u
+                 INNER JOIN user_role ur ON ur.uid = u.id
+                 INNER JOIN role r ON r.id = ur.rid
+        WHERE u.id = #{id}
+    </select>
+
+    <delete id="deleteRoleList" parameterType="userInfo">
+        DELETE FROM user_role WHERE uid = #{id}
+    </delete>
+</mapper>
