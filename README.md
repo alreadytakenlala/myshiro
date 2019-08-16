@@ -10,10 +10,11 @@
 > 3. 服务器: tomcat
 
 ### 描述
-这是我学习shiro权限管理的第一个练手项目，比较简单，如果你也想要学习shiro框架，这个项目正好适合你。
+这是我学习shiro权限管理的第一个练手项目，本项目前后端分离，如果你也想要学习shiro框架，这个项目正好适合你。
 
 ### 展示
-* 首页: http://localhost:8080
+* 后端接口地址: http://localhost:8080
+* 首页: front_page/index.html
 
 ### 项目部署
 1.项目配置
@@ -35,8 +36,6 @@
    ```
 5. 数据库导入myblog-master/sql下的数据库文件
    * db.sql
-6.运行前端
-   * front_page/index.html
    
 ### 项目截图
 
