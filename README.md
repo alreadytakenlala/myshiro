@@ -35,6 +35,8 @@
    ```
 5. 数据库导入myblog-master/sql下的数据库文件
    * db.sql
+6.运行前端
+   * front_page/index.html
    
 ### 项目截图
 
