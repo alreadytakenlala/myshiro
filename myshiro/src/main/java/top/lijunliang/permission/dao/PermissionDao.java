@@ -1,6 +1,5 @@
 package top.lijunliang.permission.dao;
 
-import com.opensymphony.module.sitemesh.Page;
 import org.springframework.stereotype.Repository;
 import top.lijunliang.permission.entity.SysPermission;
 

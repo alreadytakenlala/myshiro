@@ -37,10 +37,10 @@
     <select id="findByUserName" parameterType="userInfo" resultMap="userMap">
         SELECT u.id as u_id, u.name as u_name, u.password as u_password, u.salt as u_salt, r.id as r_id, r.name as r_name, p.id as p_id, p.name as p_name, p.permission as p_permission
         FROM user u
-            INNER JOIN user_role ur ON ur.uid = u.id
-            INNER JOIN role r ON r.id = ur.rid
-            INNER JOIN role_permission rp ON rp.rid = r.id
-            INNER JOIN permission p ON p.id = rp.pid
+            LEFT JOIN user_role ur ON ur.uid = u.id
+            LEFT JOIN role r ON r.id = ur.rid
+            LEFT JOIN role_permission rp ON rp.rid = r.id
+            LEFT JOIN permission p ON p.id = rp.pid
         WHERE u.name = #{name}
     </select>
 

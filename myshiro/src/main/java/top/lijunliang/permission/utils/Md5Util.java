@@ -7,11 +7,6 @@ import java.security.MessageDigest;
 
 /**
  * MD5通用类
- *
- * @author 浩令天下
- * @since 2017.04.15
- * @version 1.0.0_1
- *
  */
 public class Md5Util {
 
@@ -26,5 +21,9 @@ public class Md5Util {
     public static String encryption(String password, String method, String key, int frequency)
     {
         return new SimpleHash(method, password, ByteSource.Util.bytes(key), frequency).toHex();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(encryption("root", "md5", "123456", 2));
     }
 }
